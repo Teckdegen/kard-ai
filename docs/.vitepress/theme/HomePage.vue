@@ -165,20 +165,20 @@
 }
 
 .hero-title {
-  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.1;
   color: #ffffff;
   letter-spacing: -0.03em;
   font-style: italic;
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #999999;
   line-height: 1.6;
-  max-width: 600px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
