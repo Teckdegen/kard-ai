@@ -73,8 +73,22 @@ html:not(.dark) {
 /* Hide the appearance toggle button */
 .VPSwitchAppearance,
 .appearance-toggle,
-button[aria-label="toggle dark mode"] {
+button[aria-label="toggle dark mode"],
+.VPNavBarAppearance {
   display: none !important;
+}
+
+/* Remove default page padding for home */
+.VPContent.has-sidebar {
+  padding-left: 0 !important;
+}
+
+.VPDoc .container {
+  max-width: 100% !important;
+}
+
+.vp-doc {
+  padding: 0 !important;
 }
 
 /* Hero section */
