@@ -6,3 +6,6 @@ dist
 .kard-state
 docs/.vitepress/cache
 docs/.vitepress/dist
+sdk/node_modules
+sdk/dist
+sdk/.env

@@ -3,6 +3,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "Kard",
   description: "Trust infrastructure for autonomous economies.",
+  appearance: "dark",
   head: [
     ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
   ],
@@ -12,7 +13,6 @@ export default defineConfig({
       { text: "Guide", link: "/guide/introduction" },
       { text: "API", link: "/api/overview" },
       { text: "GitHub", link: "https://github.com/Teckdegen/kard-ai" },
-      { text: "NPM", link: "https://www.npmjs.com/package/kard-ai" },
     ],
     sidebar: [
       {
@@ -40,7 +40,7 @@ export default defineConfig({
           { text: "OpenClaw Orchestration", link: "/layers/orchestration" },
           { text: "Aomi Execution", link: "/layers/execution" },
           { text: "Filecoin Memory", link: "/layers/memory" },
-          { text: "Proofs & Verification", link: "/layers/proofs" },
+          { text: "Proofs and Verification", link: "/layers/proofs" },
           { text: "Arbitration", link: "/layers/arbitration" },
           { text: "Reputation", link: "/layers/reputation" },
           { text: "Swarm Economies", link: "/layers/swarm" },
@@ -62,7 +62,6 @@ export default defineConfig({
         items: [
           { text: "Filecoin Mainnet", link: "/deploy/mainnet" },
           { text: "Calibration Testnet", link: "/deploy/testnet" },
-          { text: "Publishing to NPM", link: "/deploy/npm" },
         ],
       },
     ],

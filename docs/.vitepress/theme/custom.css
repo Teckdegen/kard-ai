@@ -1,4 +1,4 @@
-/* Kard Docs — Black & White Monochrome Theme */
+/* Kard Docs — Dark Only Monochrome Theme. No light mode. */
 
 :root {
   --vp-c-brand-1: #ffffff;
@@ -52,16 +52,29 @@
   --vp-home-hero-image-filter: none;
 }
 
-/* Force dark mode always */
+/* Force dark always. No toggle. */
 html {
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 
-.dark {
+html.dark,
+html:not(.dark) {
   --vp-c-bg: #000000;
   --vp-c-bg-alt: #0a0a0a;
   --vp-c-bg-elv: #111111;
   --vp-c-bg-soft: #1a1a1a;
+  --vp-c-text-1: #ffffff;
+  --vp-c-text-2: #cccccc;
+  --vp-c-text-3: #999999;
+  --vp-c-divider: #222222;
+  --vp-c-border: #333333;
+}
+
+/* Hide the appearance toggle button */
+.VPSwitchAppearance,
+.appearance-toggle,
+button[aria-label="toggle dark mode"] {
+  display: none !important;
 }
 
 /* Hero section */
@@ -76,10 +89,6 @@ html {
 }
 
 /* Code blocks */
-.vp-code-group .tabs label {
-  color: #999999;
-}
-
 div[class*="language-"] {
   border: 1px solid #222222;
   background-color: #0a0a0a !important;
@@ -133,25 +142,10 @@ td {
   border-color: #222222;
 }
 
-/* Badges */
-.VPBadge {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  border: 1px solid #333333;
-}
-
 /* Custom containers */
 .custom-block {
   border-color: #333333;
   background-color: #0a0a0a;
-}
-
-.custom-block.tip {
-  border-color: #444444;
-}
-
-.custom-block.warning {
-  border-color: #666666;
 }
 
 /* Footer */
