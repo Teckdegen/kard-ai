@@ -1,36 +1,25 @@
-# Memory API
+# Memory
 
-## `MemoryStore`
+IPFS content addressing and Filecoin pinning for permanent storage.
 
-The IPFS memory interface (backed by Helia + Filecoin Pin).
+## Store data
 
-### `store.putJson(value, name?)`
+```ts
+// Store JSON (automatically pinned to Filecoin)
+const cid = await kard.memory.putJson({ key: "value" }, "my-data");
 
-Store JSON on IPFS and pin to Filecoin. Returns CID.
+// Store bytes
+const cid = await kard.memory.putBytes(new Uint8Array([1, 2, 3]), "raw");
+```
 
-### `store.getJson(cid)`
+## Retrieve data
 
-Retrieve JSON by CID.
+```ts
+const data = await kard.memory.getJson(cid);
+const bytes = await kard.memory.getBytes(cid);
+```
 
-### `store.putBytes(data, name?)`
-
-Store raw bytes on IPFS and pin to Filecoin. Returns CID.
-
-### `store.getBytes(cid)`
-
-Retrieve bytes by CID.
-
-### `store.pin(cid, name?, meta?)`
-
-Explicitly pin a CID with metadata.
-
-### `store.stop()`
-
-Stop the IPFS node.
-
-## `FilecoinPinClient`
-
-Direct IPFS Pinning Service API client.
+## Filecoin Pin client
 
 ```ts
 import { FilecoinPinClient } from "kard-ai/memory";
@@ -41,49 +30,31 @@ const fc = new FilecoinPinClient({
   pollIntervalMs: 2000,
   pollTimeoutMs: 120000,
 });
+
+// Pin a CID
+const rec = await fc.pin({ cid: "bafy...", name: "my-dataset" });
+
+// Wait for confirmation
+await fc.waitUntilPinned(rec.requestid);
+
+// List pins
+const pins = await fc.list({ status: ["pinned"] });
+
+// Remove a pin
+await fc.unpin(rec.requestid);
 ```
 
-### `fc.pin(obj)`
+## Archive
 
-Submit a pin request.
-
-### `fc.get(requestid)`
-
-Get pin status.
-
-### `fc.list(filter?)`
-
-List pins with optional filter.
-
-### `fc.unpin(requestid)`
-
-Remove a pin.
-
-### `fc.waitUntilPinned(requestid)`
-
-Poll until pin is confirmed.
-
-## `Archive`
-
-Queryable index over pinned protocol artifacts.
+Query all pinned protocol artifacts:
 
 ```ts
-import { Archive } from "kard-ai/memory";
+// Everything for an agreement
+const entries = kard.archive.list({ ref: agreement.agreement_id });
 
-const archive = new Archive(memoryStore);
-```
+// All proofs
+const proofs = kard.archive.list({ kind: "proof" });
 
-### `archive.putAgreement(agreement)`
-### `archive.putProof(proof)`
-### `archive.putVerdict(verdict)`
-### `archive.putReceipt(receipt)`
-### `archive.putProfile(profile)`
-### `archive.putNegotiationLog(log, refs)`
-
-### `archive.list(filter?)`
-
-Query entries by kind and/or reference.
-
-```ts
-const entries = archive.list({ kind: "proof", ref: agreementId });
+// All verdicts for an agent
+const verdicts = kard.archive.list({ kind: "verdict", ref: agent.agent_id });
 ```

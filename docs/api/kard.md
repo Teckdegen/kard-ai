@@ -1,57 +1,59 @@
 # Kard
 
-The main protocol facade that composes all 13 layers.
+The main protocol facade.
 
-## `Kard.create(config)`
-
-Create a new Kard instance with explicit configuration.
+## Create an instance
 
 ```ts
-const kard = await Kard.create({
-  sdk: {
-    chain: { chainId: 314, rpcUrl: "https://api.node.glif.io/rpc/v1" },
-    escrow: { escrowAddress: "0x...", arbiterAddress: "0x..." },
-    filecoinPin: { endpoint: "https://...", token: "..." },
-  },
-});
-```
+import { Kard } from "kard-ai";
 
-## `Kard.fromEnv()`
-
-Create from environment variables.
-
-```ts
+// From environment variables
 const kard = await Kard.fromEnv();
+
+// From explicit config
+const kard = await Kard.create({ sdk: { ... } });
 ```
 
-## `kard.fulfill(request, wallet)`
+## kard.fulfill(request, wallet)
 
-Execute a complete autonomous commerce flow.
-
-**Parameters:**
-- `request: ServiceRequest` — what the buyer wants
-- `wallet: AgentWallet` — buyer's wallet for signing and payment
-
-**Returns:** `FulfillResult`
+Execute a complete autonomous commerce flow. This is the main function.
 
 ```ts
-interface FulfillResult {
-  agreement: Agreement;
-  proof_cid: string;
-  agreement_cid: string;
-  verdict_cid: string;
-  fulfillment_cid: string;
-  receipt: SettlementReceipt;
-  escrow: EscrowReceipt;
+const result = await kard.fulfill(
+  {
+    request_id: newId("req"),
+    buyer_id: buyer.agent_id,
+    capability: "gpu_inference",
+    max_price_wei: parseEther("0.01").toString(),
+    max_latency_ms: 500,
+    duration_seconds: 3600,
+    payload: { prompt: "analyze this data" },
+    verification: "execution_proof",
+  },
+  buyerWallet
+);
+```
+
+Returns:
+
+```ts
+{
+  agreement: Agreement;          // the negotiated agreement
+  proof_cid: string;             // Filecoin CID of execution proof
+  agreement_cid: string;         // Filecoin CID of agreement
+  verdict_cid: string;           // Filecoin CID of arbitration verdict
+  fulfillment_cid: string;       // Filecoin CID of fulfillment statement
+  receipt: SettlementReceipt;    // payment amounts
+  escrow: EscrowReceipt;         // escrow transaction details
   fulfillment: FulfillmentStatement;
-  workflow_id: string;
-  protocol_version: string;
+  workflow_id: string;           // OpenClaw workflow ID
+  protocol_version: string;      // "kard.v1"
 }
 ```
 
-## `kard.registerProvider(impl)`
+## kard.registerProvider(impl)
 
-Register execution logic for a provider agent.
+Register execution logic for a provider agent:
 
 ```ts
 kard.registerProvider({
@@ -66,36 +68,37 @@ kard.registerProvider({
 });
 ```
 
-## `kard.getEventLog()`
+## kard.registry
 
-Get the full protocol event log.
+Register and look up agents:
+
+```ts
+const agent = await kard.registry.register(createAgentProfile({ ... }));
+const found = kard.registry.get(agentId);
+const byWallet = kard.registry.byWalletAddress(address);
+```
+
+## kard.marketplace
+
+List and find services:
+
+```ts
+kard.marketplace.list({ provider_id, capability, price_wei, pricing_unit, sla });
+const listings = kard.marketplace.byCapability("gpu_inference");
+```
+
+## kard.getEventLog()
+
+Get the full protocol event log:
 
 ```ts
 const events = kard.getEventLog();
 ```
 
-## `kard.shutdown()`
+## kard.shutdown()
 
-Gracefully stop the IPFS node and clean up.
+Gracefully stop the IPFS node:
 
 ```ts
 await kard.shutdown();
 ```
-
-## Properties
-
-| Property | Type | Description |
-|---|---|---|
-| `kard.registry` | `AgentRegistry` | Agent identity store |
-| `kard.marketplace` | `Marketplace` | Service listings |
-| `kard.discovery` | `DiscoveryEngine` | Candidate scoring |
-| `kard.negotiation` | `NegotiationEngine` | Price convergence |
-| `kard.escrow` | `AlkahestEscrow` | Onchain fund management |
-| `kard.orchestrator` | `OpenClaw` | Workflow engine |
-| `kard.proofs` | `ProofBuilder` | Proof construction |
-| `kard.verifier` | `ProofVerifier` | Proof verification |
-| `kard.arbiter` | `AIArbiter` | Arbitration decisions |
-| `kard.reputation` | `ReputationEngine` | Trust scoring |
-| `kard.memory` | `MemoryStore` | IPFS + Filecoin |
-| `kard.archive` | `Archive` | Queryable CID index |
-| `kard.events` | `EventBus` | Protocol event bus |

@@ -1,65 +1,69 @@
-# Execution API
+# Execution
 
-## `AomiRuntime`
+The Aomi runtime for autonomous agent execution.
+
+## Create a runtime
 
 ```ts
-import { AomiRuntime } from "kard-ai/execution";
+import { AomiRuntime, createAgentWallet, resolveChainEnv } from "kard-ai";
+
+const env = resolveChainEnv({ chainId: 314, rpcUrl: "https://api.node.glif.io/rpc/v1" });
+const wallet = createAgentWallet("0xKEY", env);
 
 const aomi = new AomiRuntime(wallet, {
-  smartAccount: { address: "0x...", bundlerUrl: "...", entryPoint: "0x..." },
+  smartAccount: {
+    address: "0xSMART_ACCOUNT",
+    bundlerUrl: "https://bundler.example/rpc",
+    entryPoint: "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+  },
 });
 ```
 
-### `aomi.registerSkill(spec)`
-
-Register a composable skill.
-
-### `aomi.runSkill(name, input, state?)`
-
-Execute a skill with signed intent.
-
-### `aomi.addPolicy(policy)`
-
-Add an execution policy.
-
-### `aomi.addPreFlightCheck(check)`
-
-Add a pre-flight validation check.
-
-### `aomi.evaluate(state)`
-
-Evaluate all policies against state.
-
-### `aomi.send(to, value, data?)`
-
-Send a transaction (via smart account if configured).
-
-### `aomi.batchSend(ops)`
-
-Execute multiple sends.
-
-### `aomi.revoke(reason)`
-
-Permanently block this runtime.
-
-### `aomi.restrictTargets(addresses)`
-
-Whitelist allowed send targets.
-
-### `aomi.isRevoked()`
-
-Check if runtime is revoked.
-
-## `SkillRegistry`
+## Register a skill
 
 ```ts
-const registry = aomi.skills;
+aomi.registerSkill({
+  name: "summarize",
+  description: "summarize a topic",
+  permissions: { requires_approval: false, max_value_wei: parseEther("0.05") },
+  run: async (input) => {
+    const summary = await llm.run(input.topic);
+    return { summary };
+  },
+});
+```
 
-registry.register(spec);     // add a skill
-registry.unregister(name);   // remove a skill
-registry.list();             // all registered skills
-registry.has(name);          // check existence
-registry.log();              // invocation history
-registry.historyFor(name);   // history for specific skill
-registry.clearHistory();     // reset (testing)
+## Run a skill
+
+```ts
+const inv = await aomi.runSkill("summarize", { topic: "Filecoin" });
+
+inv.status          // "completed"
+inv.output          // { summary: "..." }
+inv.signed_intent   // cryptographic proof of execution
+inv.duration_ms     // how long it took
+```
+
+## Kill switch
+
+```ts
+aomi.revoke("key compromised");
+// All further operations throw
+```
+
+## Restrict targets
+
+```ts
+aomi.restrictTargets(["0xESCROW", "0xTREASURY"]);
+// Sends to any other address are blocked
+```
+
+## Send funds
+
+```ts
+await aomi.send("0xTARGET", parseEther("0.1"));
+await aomi.batchSend([
+  { to: "0xA", value: parseEther("0.1") },
+  { to: "0xB", value: parseEther("0.2") },
+]);
 ```

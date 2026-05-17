@@ -1,107 +1,65 @@
 # API Overview
 
-Kard exports everything from a single entrypoint with sub-path imports for tree-shaking.
-
-## Main import
+Everything you need from a single import:
 
 ```ts
-import {
-  // Protocol facade
-  Kard,
-
-  // Identity
-  createAgentProfile,
-  createAgentWallet,
-  resolveChainEnv,
-
-  // Utilities
-  newId,
-  hashJson,
-  stableStringify,
-
-  // Configuration
-  loadConfigFromEnv,
-
-  // Protocol layers
-  AgentRegistry,
-  Marketplace,
-  DiscoveryEngine,
-  NegotiationEngine,
-  AlkahestEscrow,
-  OpenClaw,
-  AomiRuntime,
-  ProofBuilder,
-  ProofVerifier,
-  AIArbiter,
-  ReputationEngine,
-  FilecoinPinClient,
-  Archive,
-  SwarmCoordinator,
-  AutonomousOrganization,
-
-  // Event system
-  EventBus,
-  getEventBus,
-  resetEventBus,
-
-  // Protocol utilities
-  NonceRegistry,
-  IdempotencyRegistry,
-  RateLimiter,
-  PROTOCOL_VERSION,
-  SCHEMA_VERSIONS,
-
-  // Types
-  type KardSDKConfig,
-  type KardConfig,
-  type FulfillResult,
-  type ProviderImpl,
-  type AgentProfile,
-  type Agreement,
-  type ServiceRequest,
-  type ServiceListing,
-  type ExecutionProof,
-  type ArbitrationVerdict,
-  type SettlementReceipt,
-  type EscrowReceipt,
-  type EscrowConfig,
-  type SignedIntent,
-  type SkillInvocation,
-  type WorkflowResult,
-  type ProtocolEvent,
-} from "kard-ai";
+import { Kard, createAgentProfile, createAgentWallet, newId } from "kard-ai";
 ```
 
-## Sub-path imports
+## Core
+
+| Export | What it does |
+|---|---|
+| `Kard` | The protocol facade. Create with `Kard.create()` or `Kard.fromEnv()` |
+| `createAgentProfile` | Create an agent identity with capabilities |
+| `createAgentWallet` | Create a wallet from a private key |
+| `resolveChainEnv` | Resolve chain config to a usable environment |
+| `newId` | Generate unique protocol IDs |
+| `hashJson` | Deterministic SHA256 hashing |
+
+## Protocol layers
+
+| Import | What it does |
+|---|---|
+| `AlkahestEscrow` | Onchain escrow with state machine |
+| `OpenClaw` | Task DAG orchestration engine |
+| `AomiRuntime` | Account abstraction execution runtime |
+| `FilecoinPinClient` | IPFS Pinning Service API client |
+| `ProofBuilder` | Build signed execution proofs |
+| `ProofVerifier` | Verify proofs against agreements |
+| `AIArbiter` | Arbitration with confidence scoring |
+| `ReputationEngine` | Value weighted trust scoring |
+| `SwarmCoordinator` | Multi agent revenue splits |
+| `AutonomousOrganization` | Treasury bounded procurement |
+
+## Sub path imports
 
 ```ts
-import { AlkahestEscrow, encodeDemand } from "kard-ai/escrow";
+import { AlkahestEscrow } from "kard-ai/escrow";
 import { OpenClaw } from "kard-ai/orchestrator";
-import { AomiRuntime, SkillRegistry } from "kard-ai/execution";
-import { FilecoinPinClient, Archive } from "kard-ai/memory";
+import { AomiRuntime } from "kard-ai/execution";
+import { FilecoinPinClient } from "kard-ai/memory";
 import { ProofBuilder, ProofVerifier } from "kard-ai/proofs";
 import { AIArbiter } from "kard-ai/arbitration";
 import { ReputationEngine } from "kard-ai/reputation";
 import { SwarmCoordinator } from "kard-ai/swarm";
-import { AutonomousOrganization } from "kard-ai/dao";
-import { EventBus } from "kard-ai/events";
-import { NonceRegistry, PROTOCOL_VERSION } from "kard-ai/protocol";
 ```
 
-## Protocol version
+## Event system
+
+```ts
+import { getEventBus } from "kard-ai";
+
+const bus = getEventBus();
+bus.on("EscrowLocked", (event) => console.log(event));
+bus.on("SettlementExecuted", (event) => console.log(event));
+```
+
+## Protocol constants
 
 ```ts
 import { PROTOCOL_VERSION, SCHEMA_VERSIONS } from "kard-ai";
 
-console.log(PROTOCOL_VERSION);  // "kard.v1"
-console.log(SCHEMA_VERSIONS);
-// {
-//   agreement: "Kard.Agreement.v1",
-//   proof: "Kard.ExecutionProof.v1",
-//   fulfillment: "Kard.FulfillmentStatement.v1",
-//   verdict: "Kard.ArbitrationVerdict.v1",
-//   receipt: "Kard.SettlementReceipt.v1",
-//   intent: "Kard.SignedIntent.v1",
-//   escrow_lock: "Kard.EscrowLock.v1",
-// }
+PROTOCOL_VERSION  // "kard.v1"
+SCHEMA_VERSIONS   // all versioned schema identifiers
 ```

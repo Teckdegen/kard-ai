@@ -1,34 +1,34 @@
-# Calibration Testnet Deployment
+# Calibration Testnet
+
+How to use Kard on Filecoin Calibration testnet (chain ID 314159) for development.
 
 ## Get testnet FIL
 
-1. Visit the [Filecoin Calibration Faucet](https://faucet.calibration.fildev.network/)
-2. Enter your wallet address
-3. Receive tFIL for testing
+Visit the [Filecoin Calibration Faucet](https://faucet.calibration.fildev.network/) and enter your wallet address.
 
 ## Configuration
-
-```env
-CHAIN_ID=314159
-RPC_URL=https://api.calibration.node.glif.io/rpc/v1
-ALKAHEST_ESCROW=0xYOUR_TESTNET_ESCROW
-ALKAHEST_ARBITER_TRUSTED_PARTY=0xYOUR_TESTNET_ARBITER
-FILECOIN_PIN_ENDPOINT=https://api.web3.storage/pins
-FILECOIN_PIN_TOKEN=your-token
-BUYER_PK=0xYOUR_TESTNET_BUYER_KEY
-SELLER_PK=0xYOUR_TESTNET_SELLER_KEY
-ARBITER_PK=0xYOUR_TESTNET_ARBITER_KEY
-```
-
-## Run
 
 ```ts
 import { Kard } from "kard-ai";
 
-const kard = await Kard.fromEnv();
-// Operations run on Filecoin Calibration testnet
+const kard = await Kard.create({
+  sdk: {
+    chain: {
+      chainId: 314159,
+      rpcUrl: "https://api.calibration.node.glif.io/rpc/v1",
+    },
+    escrow: {
+      escrowAddress: "0xYOUR_TESTNET_ESCROW",
+      arbiterAddress: "0xYOUR_TESTNET_ARBITER",
+    },
+    filecoinPin: {
+      endpoint: "https://api.web3.storage/pins",
+      token: "your-token",
+    },
+  },
+});
 ```
 
-## Verify
+## Block explorer
 
 Check transactions on [Calibration Filfox](https://calibration.filfox.info/en).

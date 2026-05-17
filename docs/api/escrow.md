@@ -1,109 +1,75 @@
-# Escrow API
+# Escrow
 
-## `AlkahestEscrow`
+The Alkahest escrow layer for trustless fund management.
+
+## Lock funds
 
 ```ts
 import { AlkahestEscrow } from "kard-ai/escrow";
 
 const escrow = new AlkahestEscrow({
-  escrowAddress: "0x...",
-  arbiterAddress: "0x...",
-  token: "0x0000000000000000000000000000000000000000",
+  escrowAddress: "0xYOUR_CONTRACT",
+  arbiterAddress: "0xYOUR_ARBITER",
   disputeWindowSeconds: 3600,
-  expirationBufferSeconds: 7200,
 });
-```
 
-### `escrow.lock(args)`
-
-Lock funds onchain.
-
-```ts
 const receipt = await escrow.lock({
-  buyer: AgentWallet,
-  arbiter: Address,
-  agreement: Agreement,
+  buyer: buyerWallet,
+  arbiter: "0xARBITER",
+  agreement,
 });
-// Returns: EscrowReceipt { uid, buyer, arbiter, amount, tx_hash, state, nonce }
+
+// receipt.uid       — escrow identifier
+// receipt.tx_hash   — onchain transaction
+// receipt.state     — "locked"
 ```
 
-### `escrow.settle(args)`
-
-Settle an escrow (pay or refund).
+## Settle (pay provider)
 
 ```ts
 const result = await escrow.settle({
-  buyer: AgentWallet,
-  uid: Hex,
-  approved: boolean,
-  penaltyBps: number,       // 0-10000
-  fulfillmentUid?: Hex,
+  buyer: buyerWallet,
+  uid: receipt.uid,
+  approved: true,
+  penaltyBps: 0,
+  fulfillmentUid: fulfillment.uid,
 });
-// Returns: SettleResult { paid_provider, refunded_buyer, protocol_fee, tx_hash, state }
+// result.state === "settled"
 ```
 
-### `escrow.dispute(uid, reason)`
-
-File a dispute against a locked escrow.
+## Settle (refund buyer)
 
 ```ts
-await escrow.dispute(uid, "provider failed to deliver");
-```
-
-### `escrow.checkExpiration(uid)`
-
-Check if an escrow has expired.
-
-```ts
-const expired = escrow.checkExpiration(uid); // true/false
-```
-
-### `escrow.refundExpired(args)`
-
-Refund an expired escrow.
-
-```ts
-const result = await escrow.refundExpired({ buyer: wallet, uid });
-```
-
-### `escrow.getRecord(uid)`
-
-Get the full escrow record.
-
-```ts
-const record = escrow.getRecord(uid);
-// EscrowRecord { uid, state, buyer, arbiter, amount, token, locked_at, ... }
-```
-
-### `escrow.getState(uid)`
-
-Get current escrow state.
-
-```ts
-const state = escrow.getState(uid); // "locked" | "settled" | "refunded" | ...
-```
-
-## `encodeDemand(agreement)`
-
-Encode agreement obligations into ABI format for the escrow contract.
-
-```ts
-import { encodeDemand } from "kard-ai/escrow";
-const demand = encodeDemand(agreement); // Hex
-```
-
-## `buildFulfillmentStatement(args)`
-
-Build a signed fulfillment attestation.
-
-```ts
-import { buildFulfillmentStatement } from "kard-ai/escrow";
-
-const statement = await buildFulfillmentStatement({
-  provider: providerWallet,
-  buyerWallet: buyerAddress,
-  agreement,
-  proof,
+const result = await escrow.settle({
+  buyer: buyerWallet,
+  uid: receipt.uid,
+  approved: false,
+  penaltyBps: 0,
 });
-// FulfillmentStatement { uid, schema, data, attester, recipient, signature, ts, proof_id }
+// result.state === "refunded"
 ```
+
+## File a dispute
+
+```ts
+await escrow.dispute(receipt.uid, "provider did not deliver");
+```
+
+## Check state
+
+```ts
+const state = escrow.getState(receipt.uid);
+// "locked" | "disputed" | "settled" | "refunded" | "expired"
+```
+
+## State machine
+
+```
+LOCKED → SETTLED
+LOCKED → REFUNDED
+LOCKED → DISPUTED → SETTLED
+LOCKED → DISPUTED → REFUNDED
+LOCKED → EXPIRED → REFUNDED
+```
+
+No other transitions are allowed.

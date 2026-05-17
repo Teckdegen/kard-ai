@@ -1,37 +1,89 @@
-# Orchestrator API
+# Orchestrator
 
-## `OpenClaw`
+The OpenClaw task DAG engine for coordinating multi step workflows.
+
+## Run a workflow
 
 ```ts
 import { OpenClaw } from "kard-ai/orchestrator";
 
 const claw = new OpenClaw();
+
+const result = await claw.run([
+  {
+    id: "fetch",
+    name: "fetch_data",
+    timeout_ms: 5000,
+    run: async (ctx) => await fetchData(),
+  },
+  {
+    id: "analyze",
+    name: "analyze",
+    deps: ["fetch"],
+    retry: { attempts: 3, backoff_ms: 1000 },
+    run: async (ctx) => await analyze(ctx.results["fetch"]),
+  },
+  {
+    id: "publish",
+    name: "publish",
+    deps: ["analyze"],
+    run: async (ctx) => await publish(ctx.results["analyze"]),
+  },
+]);
+
+result.status       // "completed" or "failed"
+result.duration_ms  // total time
+result.results      // output from each task
 ```
 
-### `claw.run(tasks, opts?)`
-
-Execute a task-DAG workflow.
+## Task options
 
 ```ts
-const result = await claw.run(tasks, { workflowId: "custom-id" });
-// WorkflowResult { workflow_id, status, tasks, results, started_at, completed_at, duration_ms, compensated }
+{
+  id: string;              // unique task ID
+  name: string;            // display name
+  deps?: string[];         // depends on these task IDs
+  retry?: {
+    attempts: number;      // max retries
+    backoff_ms: number;    // delay between retries
+  };
+  timeout_ms?: number;     // max execution time
+  idempotency_key?: string; // prevents duplicate execution
+  fallback?: (input, err) => Promise<any>;   // rescue on failure
+  compensate?: (input, output) => Promise<void>; // rollback on workflow failure
+  run: (ctx) => Promise<any>;
+}
 ```
 
-### `claw.getState(workflowId)`
+## Saga compensation
 
-Get persisted workflow state.
-
-### `claw.exportStates()`
-
-Export all workflow states for external persistence.
-
-### Events
+If a workflow fails, completed tasks with `compensate` handlers are rolled back in reverse:
 
 ```ts
-claw.on("workflow:start", (data) => { ... });
+const result = await claw.run([
+  {
+    id: "reserve",
+    name: "reserve",
+    compensate: async () => await cancelReservation(),
+    run: async () => await makeReservation(),
+  },
+  {
+    id: "charge",
+    name: "charge",
+    deps: ["reserve"],
+    run: async () => { throw new Error("payment failed"); },
+  },
+]);
+
+// result.status === "failed"
+// result.compensated === ["reserve"]
+```
+
+## Events
+
+```ts
 claw.on("task:start", (data) => { ... });
 claw.on("task:complete", (data) => { ... });
 claw.on("task:fail", (data) => { ... });
-claw.on("task:fallback", (data) => { ... });
 claw.on("workflow:end", (result) => { ... });
 ```

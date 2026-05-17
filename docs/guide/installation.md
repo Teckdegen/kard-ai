@@ -1,46 +1,23 @@
 # Installation
 
+## Install Kard
+
+```bash
+npm install kard-ai
+```
+
 ## Requirements
 
-- Node.js ≥ 20
+- Node.js 20 or higher
 - A funded wallet on Filecoin (mainnet or Calibration testnet)
-- Alkahest escrow contract deployment
-- IPFS Pinning Service API endpoint (web3.storage, Storacha, etc.)
+- Deployed Alkahest escrow contracts
+- An IPFS Pinning Service API endpoint (web3.storage, Storacha, etc.)
 
-## Install from NPM
+## Verify
 
-```bash
-npm install kard
+```ts
+import { Kard } from "kard-ai";
+
+// If this imports without error, you're good
+console.log("Kard installed");
 ```
-
-## Install from source
-
-```bash
-git clone https://github.com/Teckdegen/kard-ai.git
-cd kard-ai
-npm install
-npm run build
-```
-
-## Verify installation
-
-```bash
-npm run typecheck
-npm test
-```
-
-## Peer dependencies
-
-Kard uses these production dependencies:
-
-| Package | Purpose |
-|---|---|
-| `viem` | Ethereum/Filecoin interactions |
-| `helia` | IPFS content addressing |
-| `@helia/json` | JSON storage on IPFS |
-| `@helia/unixfs` | File storage on IPFS |
-| `multiformats` | CID handling |
-| `zod` | Runtime type validation |
-| `pino` | Structured logging |
-
-All dependencies are pinned to specific major versions for stability.
