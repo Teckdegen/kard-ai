@@ -1,5 +1,16 @@
 <template>
   <div class="home-container">
+    <!-- Custom Nav -->
+    <nav class="home-nav">
+      <div class="nav-left">
+        <span class="nav-logo">K</span>
+        <span class="nav-title">Kard</span>
+      </div>
+      <div class="nav-right">
+        <a href="/guide/introduction" class="nav-btn">Docs</a>
+      </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
@@ -58,6 +69,68 @@
   width: 100%;
   min-height: 100vh;
   background: #000000;
+}
+
+/* Custom Nav */
+.home-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #111111;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+.nav-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-btn {
+  padding: 0.5rem 1.2rem;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background: #e0e0e0;
+  color: #000000;
 }
 
 /* Hero */
