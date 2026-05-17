@@ -1,0 +1,150 @@
+{
+  "name": "kard",
+  "version": "1.0.0",
+  "description": "Trustless coordination and settlement protocol for autonomous AI agents. Production-grade SDK for the cybernetic economy.",
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./registry": {
+      "types": "./dist/src/registry/index.d.ts",
+      "import": "./dist/src/registry/index.js"
+    },
+    "./marketplace": {
+      "types": "./dist/src/marketplace/index.d.ts",
+      "import": "./dist/src/marketplace/index.js"
+    },
+    "./discovery": {
+      "types": "./dist/src/discovery/index.d.ts",
+      "import": "./dist/src/discovery/index.js"
+    },
+    "./negotiation": {
+      "types": "./dist/src/negotiation/index.d.ts",
+      "import": "./dist/src/negotiation/index.js"
+    },
+    "./escrow": {
+      "types": "./dist/src/escrow/index.d.ts",
+      "import": "./dist/src/escrow/index.js"
+    },
+    "./orchestrator": {
+      "types": "./dist/src/orchestrator/index.d.ts",
+      "import": "./dist/src/orchestrator/index.js"
+    },
+    "./execution": {
+      "types": "./dist/src/execution/index.d.ts",
+      "import": "./dist/src/execution/index.js"
+    },
+    "./memory": {
+      "types": "./dist/src/memory/index.d.ts",
+      "import": "./dist/src/memory/index.js"
+    },
+    "./proofs": {
+      "types": "./dist/src/proofs/index.d.ts",
+      "import": "./dist/src/proofs/index.js"
+    },
+    "./arbitration": {
+      "types": "./dist/src/arbitration/index.d.ts",
+      "import": "./dist/src/arbitration/index.js"
+    },
+    "./reputation": {
+      "types": "./dist/src/reputation/index.d.ts",
+      "import": "./dist/src/reputation/index.js"
+    },
+    "./swarm": {
+      "types": "./dist/src/swarm/index.d.ts",
+      "import": "./dist/src/swarm/index.js"
+    },
+    "./dao": {
+      "types": "./dist/src/dao/index.d.ts",
+      "import": "./dist/src/dao/index.js"
+    },
+    "./events": {
+      "types": "./dist/src/core/events.d.ts",
+      "import": "./dist/src/core/events.js"
+    },
+    "./protocol": {
+      "types": "./dist/src/core/protocol.d.ts",
+      "import": "./dist/src/core/protocol.js"
+    }
+  },
+  "files": [
+    "dist/src",
+    "README.md",
+    "LICENSE",
+    ".env.example",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "ai-agents",
+    "autonomous-agents",
+    "agent-commerce",
+    "alkahest",
+    "openclaw",
+    "aomi",
+    "filecoin",
+    "ipfs",
+    "filecoin-pin",
+    "escrow",
+    "account-abstraction",
+    "trustless",
+    "settlement",
+    "agent-economy",
+    "cybernetic-economy",
+    "decentralized-storage",
+    "orchestration",
+    "task-dag",
+    "proof-of-execution",
+    "arbitration"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/kard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/kard/issues"
+  },
+  "homepage": "https://github.com/yourusername/kard#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "test": "tsx --test test/**/*.test.ts",
+    "test:adversarial": "tsx --test test/adversarial.test.ts",
+    "test:all": "tsx --test test/**/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "@helia/json": "^4.0.1",
+    "@helia/unixfs": "^4.0.1",
+    "dotenv": "^16.4.5",
+    "helia": "^5.1.0",
+    "multiformats": "^13.3.1",
+    "pino": "^9.5.0",
+    "pino-pretty": "^11.3.0",
+    "viem": "^2.21.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitepress": "^1.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+*.log
+.helia
+.kard-state
+docs/.vitepress/cache
+docs/.vitepress/dist
