@@ -4,6 +4,8 @@
  */
 import type { Address, Hex } from "viem";
 import type { Chain } from "viem";
+import type { FilecoinPinConfig } from "../memory/filecoin-pin.js";
+import type { SmartAccountConfig } from "../execution/smart-account.js";
 
 // ─── Chain Configuration ────────────────────────────────────────────────────
 
@@ -31,30 +33,6 @@ export interface AlkahestConfig {
   expirationBufferSeconds?: number;
 }
 
-// ─── Filecoin Pin Configuration ─────────────────────────────────────────────
-
-export interface FilecoinPinConfig {
-  /** IPFS Pinning Service API endpoint */
-  endpoint: string;
-  /** Bearer token for authentication */
-  token: string;
-  /** Poll interval for pin status checks in ms (default: 2000) */
-  pollIntervalMs?: number;
-  /** Timeout for pin confirmation in ms (default: 120000) */
-  pollTimeoutMs?: number;
-}
-
-// ─── Smart Account Configuration ────────────────────────────────────────────
-
-export interface SmartAccountConfig {
-  /** ERC-4337 smart account address */
-  address: Address;
-  /** Bundler RPC URL */
-  bundlerUrl?: string;
-  /** EntryPoint contract address */
-  entryPoint?: Address;
-}
-
 // ─── Agent Keys ─────────────────────────────────────────────────────────────
 
 export interface AgentKeys {
@@ -75,7 +53,7 @@ export interface KardSDKConfig {
   escrow: AlkahestConfig;
   /** Filecoin Pin configuration (REQUIRED for persistent storage) */
   filecoinPin: FilecoinPinConfig;
-  /** Smart account configuration (optional — enables account abstraction) */
+  /** Smart account configuration (enables account abstraction) */
   smartAccount?: SmartAccountConfig;
   /** Agent private keys (alternative to passing wallets directly) */
   keys?: AgentKeys;
@@ -87,7 +65,6 @@ export interface KardSDKConfig {
 
 /**
  * Load configuration from environment variables.
- * This is a convenience helper — production users should pass config explicitly.
  */
 export function loadConfigFromEnv(): KardSDKConfig {
   const requireEnv = (key: string): string => {

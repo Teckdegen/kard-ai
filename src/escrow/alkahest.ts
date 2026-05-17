@@ -352,11 +352,14 @@ export class AlkahestEscrow {
   async refundExpired(args: { buyer: AgentWallet; uid: Hex }): Promise<SettleResult> {
     const record = this.records.get(args.uid);
     if (!record) throw new Error(`no escrow record for uid ${args.uid}`);
-    if (record.state !== "expired") {
-      this.checkExpiration(args.uid);
-      if (record.state !== "expired") throw new Error("escrow has not expired");
+    // Try to expire if still locked
+    this.checkExpiration(args.uid);
+    // Re-read state after potential mutation
+    const currentState = this.records.get(args.uid)!.state;
+    if (currentState !== "expired") {
+      throw new Error("escrow has not expired");
     }
-    assertTransition(record.state, "refunded");
+    assertTransition(currentState, "refunded");
     record.state = "refunded";
     getEventBus().emit_event("EscrowRefunded", { uid: args.uid, reason: "expired" });
     return { paid_provider: 0n, refunded_buyer: record.amount, protocol_fee: 0n, state: "refunded" };

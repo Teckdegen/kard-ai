@@ -47,7 +47,7 @@ const result = await kard.memory.pin(cid, "agreement-123", {
 Direct access to the IPFS Pinning Service API:
 
 ```ts
-import { FilecoinPinClient } from "kard/memory";
+import { FilecoinPinClient } from "kard-ai/memory";
 
 const fc = new FilecoinPinClient({
   endpoint: "https://api.web3.storage/pins",

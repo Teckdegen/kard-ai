@@ -11,8 +11,8 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/guide/introduction" },
       { text: "API", link: "/api/overview" },
-      { text: "GitHub", link: "https://github.com/yourusername/kard" },
-      { text: "NPM", link: "https://www.npmjs.com/package/kard" },
+      { text: "GitHub", link: "https://github.com/Teckdegen/kard-ai" },
+      { text: "NPM", link: "https://www.npmjs.com/package/kard-ai" },
     ],
     sidebar: [
       {
@@ -67,7 +67,7 @@ export default defineConfig({
       },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/yourusername/kard" },
+      { icon: "github", link: "https://github.com/Teckdegen/kard-ai" },
     ],
     footer: {
       message: "MIT Licensed",

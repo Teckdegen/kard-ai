@@ -5,7 +5,7 @@ export * from "./core/wallet.js";
 export * from "./core/ids.js";
 export * from "./core/events.js";
 export * from "./core/protocol.js";
-export * from "./core/config.js";
+export { type KardSDKConfig, type ChainConfig, type AlkahestConfig, type AgentKeys, loadConfigFromEnv } from "./core/config.js";
 export * from "./registry/index.js";
 export * from "./marketplace/index.js";
 export * from "./discovery/index.js";

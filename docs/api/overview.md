@@ -69,29 +69,29 @@ import {
   type SkillInvocation,
   type WorkflowResult,
   type ProtocolEvent,
-} from "kard";
+} from "kard-ai";
 ```
 
 ## Sub-path imports
 
 ```ts
-import { AlkahestEscrow, encodeDemand } from "kard/escrow";
-import { OpenClaw } from "kard/orchestrator";
-import { AomiRuntime, SkillRegistry } from "kard/execution";
-import { FilecoinPinClient, Archive } from "kard/memory";
-import { ProofBuilder, ProofVerifier } from "kard/proofs";
-import { AIArbiter } from "kard/arbitration";
-import { ReputationEngine } from "kard/reputation";
-import { SwarmCoordinator } from "kard/swarm";
-import { AutonomousOrganization } from "kard/dao";
-import { EventBus } from "kard/events";
-import { NonceRegistry, PROTOCOL_VERSION } from "kard/protocol";
+import { AlkahestEscrow, encodeDemand } from "kard-ai/escrow";
+import { OpenClaw } from "kard-ai/orchestrator";
+import { AomiRuntime, SkillRegistry } from "kard-ai/execution";
+import { FilecoinPinClient, Archive } from "kard-ai/memory";
+import { ProofBuilder, ProofVerifier } from "kard-ai/proofs";
+import { AIArbiter } from "kard-ai/arbitration";
+import { ReputationEngine } from "kard-ai/reputation";
+import { SwarmCoordinator } from "kard-ai/swarm";
+import { AutonomousOrganization } from "kard-ai/dao";
+import { EventBus } from "kard-ai/events";
+import { NonceRegistry, PROTOCOL_VERSION } from "kard-ai/protocol";
 ```
 
 ## Protocol version
 
 ```ts
-import { PROTOCOL_VERSION, SCHEMA_VERSIONS } from "kard";
+import { PROTOCOL_VERSION, SCHEMA_VERSIONS } from "kard-ai";
 
 console.log(PROTOCOL_VERSION);  // "kard.v1"
 console.log(SCHEMA_VERSIONS);

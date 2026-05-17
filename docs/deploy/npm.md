@@ -35,13 +35,13 @@ Users can import from the main entrypoint or sub-paths:
 
 ```ts
 // Main
-import { Kard } from "kard";
+import { Kard } from "kard-ai";
 
 // Sub-paths
-import { AlkahestEscrow } from "kard/escrow";
-import { OpenClaw } from "kard/orchestrator";
-import { AomiRuntime } from "kard/execution";
-import { FilecoinPinClient } from "kard/memory";
+import { AlkahestEscrow } from "kard-ai/escrow";
+import { OpenClaw } from "kard-ai/orchestrator";
+import { AomiRuntime } from "kard-ai/execution";
+import { FilecoinPinClient } from "kard-ai/memory";
 ```
 
 ## Versioning

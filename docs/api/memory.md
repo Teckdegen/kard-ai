@@ -33,7 +33,7 @@ Stop the IPFS node.
 Direct IPFS Pinning Service API client.
 
 ```ts
-import { FilecoinPinClient } from "kard/memory";
+import { FilecoinPinClient } from "kard-ai/memory";
 
 const fc = new FilecoinPinClient({
   endpoint: "https://api.web3.storage/pins",
@@ -68,7 +68,7 @@ Poll until pin is confirmed.
 Queryable index over pinned protocol artifacts.
 
 ```ts
-import { Archive } from "kard/memory";
+import { Archive } from "kard-ai/memory";
 
 const archive = new Archive(memoryStore);
 ```

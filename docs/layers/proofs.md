@@ -23,7 +23,7 @@ interface ExecutionProof {
 ## Building proofs
 
 ```ts
-import { ProofBuilder } from "kard/proofs";
+import { ProofBuilder } from "kard-ai/proofs";
 
 const builder = new ProofBuilder(memoryStore);
 
@@ -44,7 +44,7 @@ const proof = await builder.build({
 ## Verifying proofs
 
 ```ts
-import { ProofVerifier } from "kard/proofs";
+import { ProofVerifier } from "kard-ai/proofs";
 
 const verifier = new ProofVerifier(registry);
 const report = await verifier.verify(agreement, proof);

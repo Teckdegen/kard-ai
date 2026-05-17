@@ -5,7 +5,7 @@ Swarm coordination enables multiple agents to collaborate on a single workload a
 ## Usage
 
 ```ts
-import { SwarmCoordinator } from "kard/swarm";
+import { SwarmCoordinator } from "kard-ai/swarm";
 
 const coordinator = new SwarmCoordinator();
 

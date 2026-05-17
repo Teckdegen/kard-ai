@@ -3,7 +3,7 @@
 ## `AlkahestEscrow`
 
 ```ts
-import { AlkahestEscrow } from "kard/escrow";
+import { AlkahestEscrow } from "kard-ai/escrow";
 
 const escrow = new AlkahestEscrow({
   escrowAddress: "0x...",
@@ -88,7 +88,7 @@ const state = escrow.getState(uid); // "locked" | "settled" | "refunded" | ...
 Encode agreement obligations into ABI format for the escrow contract.
 
 ```ts
-import { encodeDemand } from "kard/escrow";
+import { encodeDemand } from "kard-ai/escrow";
 const demand = encodeDemand(agreement); // Hex
 ```
 
@@ -97,7 +97,7 @@ const demand = encodeDemand(agreement); // Hex
 Build a signed fulfillment attestation.
 
 ```ts
-import { buildFulfillmentStatement } from "kard/escrow";
+import { buildFulfillmentStatement } from "kard-ai/escrow";
 
 const statement = await buildFulfillmentStatement({
   provider: providerWallet,

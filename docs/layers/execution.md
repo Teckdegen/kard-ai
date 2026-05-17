@@ -17,7 +17,7 @@ Aomi is the account abstraction runtime for autonomous agent execution. It provi
 Skills are composable, permission-locked agent capabilities:
 
 ```ts
-import { AomiRuntime } from "kard/execution";
+import { AomiRuntime } from "kard-ai/execution";
 
 const aomi = new AomiRuntime(wallet);
 

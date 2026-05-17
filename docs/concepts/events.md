@@ -84,7 +84,7 @@ kard.events.replay((event) => {
 ## Subscribing to events
 
 ```ts
-import { getEventBus } from "kard";
+import { getEventBus } from "kard-ai";
 
 const bus = getEventBus();
 

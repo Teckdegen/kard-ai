@@ -5,7 +5,7 @@ Kard is fully configurable via the SDK. All infrastructure parameters are passed
 ## Programmatic configuration (recommended)
 
 ```ts
-import { Kard, type KardSDKConfig } from "kard";
+import { Kard, type KardSDKConfig } from "kard-ai";
 
 const config: KardSDKConfig = {
   chain: {
@@ -40,7 +40,7 @@ const kard = await Kard.create({ sdk: config });
 For convenience, you can load config from env vars:
 
 ```ts
-import { Kard } from "kard";
+import { Kard } from "kard-ai";
 
 const kard = await Kard.fromEnv();
 ```
@@ -96,7 +96,7 @@ Custom chains are supported by passing a full `chain` definition in the config.
 ## Wallet creation
 
 ```ts
-import { createAgentWallet, resolveChainEnv } from "kard";
+import { createAgentWallet, resolveChainEnv } from "kard-ai";
 
 const chainEnv = resolveChainEnv({
   chainId: 314,

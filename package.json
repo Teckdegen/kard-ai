@@ -1,5 +1,5 @@
 {
-  "name": "kard",
+  "name": "kard-ai",
   "version": "1.0.0",
   "description": "Trustless coordination and settlement protocol for autonomous AI agents. Production-grade SDK for the cybernetic economy.",
   "type": "module",
@@ -105,12 +105,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/kard.git"
+    "url": "git+https://github.com/Teckdegen/kard-ai.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/kard/issues"
+    "url": "https://github.com/Teckdegen/kard-ai/issues"
   },
-  "homepage": "https://github.com/yourusername/kard#readme",
+  "homepage": "https://github.com/Teckdegen/kard-ai#readme",
   "publishConfig": {
     "access": "public"
   },
@@ -118,9 +118,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "prepublishOnly": "npm run build",
-    "test": "tsx --test test/**/*.test.ts",
-    "test:adversarial": "tsx --test test/adversarial.test.ts",
-    "test:all": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc --noEmit",
     "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
     "docs:dev": "vitepress dev docs",

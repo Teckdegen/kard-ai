@@ -16,7 +16,7 @@ OpenClaw is a fault-tolerant task-DAG runtime that coordinates multi-step workfl
 ## Usage
 
 ```ts
-import { OpenClaw } from "kard/orchestrator";
+import { OpenClaw } from "kard-ai/orchestrator";
 
 const claw = new OpenClaw();
 

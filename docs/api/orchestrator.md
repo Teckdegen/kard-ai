@@ -3,7 +3,7 @@
 ## `OpenClaw`
 
 ```ts
-import { OpenClaw } from "kard/orchestrator";
+import { OpenClaw } from "kard-ai/orchestrator";
 
 const claw = new OpenClaw();
 ```

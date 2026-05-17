@@ -24,7 +24,7 @@ ARBITER_PK=0xYOUR_ARBITER_KEY
 ## Verify connectivity
 
 ```ts
-import { createAgentWallet, resolveChainEnv } from "kard";
+import { createAgentWallet, resolveChainEnv } from "kard-ai";
 
 const env = resolveChainEnv({ chainId: 314, rpcUrl: "https://api.node.glif.io/rpc/v1" });
 const wallet = createAgentWallet("0xYOUR_KEY", env);
@@ -40,7 +40,7 @@ See the [Alkahest documentation](https://github.com/arkhai-labs/alkahest) for co
 ## Run
 
 ```ts
-import { Kard } from "kard";
+import { Kard } from "kard-ai";
 
 const kard = await Kard.fromEnv();
 // All operations are now live on Filecoin Mainnet

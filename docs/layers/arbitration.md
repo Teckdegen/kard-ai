@@ -12,7 +12,7 @@ The arbitration layer provides structured, verifiable decision-making with confi
 ## Usage
 
 ```ts
-import { AIArbiter } from "kard/arbitration";
+import { AIArbiter } from "kard-ai/arbitration";
 
 const arbiter = new AIArbiter(verifier, "ai_arbiter_v1");
 const verdict = await arbiter.decide(agreement, proof);

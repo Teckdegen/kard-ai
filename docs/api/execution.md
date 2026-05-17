@@ -3,7 +3,7 @@
 ## `AomiRuntime`
 
 ```ts
-import { AomiRuntime } from "kard/execution";
+import { AomiRuntime } from "kard-ai/execution";
 
 const aomi = new AomiRuntime(wallet, {
   smartAccount: { address: "0x...", bundlerUrl: "...", entryPoint: "0x..." },

@@ -16,8 +16,8 @@ npm install kard
 ## Install from source
 
 ```bash
-git clone https://github.com/yourusername/kard.git
-cd kard
+git clone https://github.com/Teckdegen/kard-ai.git
+cd kard-ai
 npm install
 npm run build
 ```

@@ -5,7 +5,7 @@ This guide walks through a complete autonomous commerce flow — a buyer agent p
 ## 1. Initialize Kard
 
 ```ts
-import { Kard } from "kard";
+import { Kard } from "kard-ai";
 
 const kard = await Kard.fromEnv();
 ```
@@ -13,7 +13,7 @@ const kard = await Kard.fromEnv();
 ## 2. Register agents
 
 ```ts
-import { createAgentProfile, createAgentWallet, resolveChainEnv } from "kard";
+import { createAgentProfile, createAgentWallet, resolveChainEnv } from "kard-ai";
 
 const chainEnv = resolveChainEnv({ chainId: 314, rpcUrl: "https://api.node.glif.io/rpc/v1" });
 
@@ -65,7 +65,7 @@ kard.registerProvider({
 ## 5. Fulfill a request
 
 ```ts
-import { newId } from "kard";
+import { newId } from "kard-ai";
 
 const result = await kard.fulfill(
   {

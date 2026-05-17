@@ -23,7 +23,7 @@ ARBITER_PK=0xYOUR_TESTNET_ARBITER_KEY
 ## Run
 
 ```ts
-import { Kard } from "kard";
+import { Kard } from "kard-ai";
 
 const kard = await Kard.fromEnv();
 // Operations run on Filecoin Calibration testnet

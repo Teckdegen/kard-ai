@@ -19,7 +19,7 @@ Invalid transitions are rejected with an error.
 ### Lock funds
 
 ```ts
-import { AlkahestEscrow } from "kard/escrow";
+import { AlkahestEscrow } from "kard-ai/escrow";
 
 const escrow = new AlkahestEscrow({
   escrowAddress: "0xYOUR_ESCROW_CONTRACT",
@@ -86,7 +86,7 @@ if (expired) {
 Obligations are ABI-encoded into the escrow's `demand` field:
 
 ```ts
-import { encodeDemand } from "kard/escrow";
+import { encodeDemand } from "kard-ai/escrow";
 
 const demand = encodeDemand(agreement);
 // Encodes: capability, maxLatencyMs, minUptimeBps, outputSpec, schemaVersion
